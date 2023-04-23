@@ -1,45 +1,45 @@
 const fs = require('fs');
 
-// TODO: Create a function that returns a license badge based on which license is passed in
-// If there is no license, return an empty string
+// function that returns a license badge based on which license is passed in
 function renderLicenseBadge(license) {
-  if (!license) {
+  if (license === 'none') {
     return ``;
   } else {
     return `[![${license} license](https://img.shields.io/badge/License-${license}-blue.svg)](${renderLicenseLink(license)})`
   }
 }
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
+// function that returns the license link
 function renderLicenseLink(license) {
   if (license === 'MIT') {
     return `https://lbesson.mit-license.org/`
   }
-  if (license === 'GPL') {
-    return `http://perso.crans.org/besson/LICENSE.html`
+  if (license === 'GNU_GPLv3') {
+    return `https://www.gnu.org/licenses/lgpl-3.0-standalone.html`
   }
-  if (license === 'CC--0') {
-    return `https://creativecommons.org/licenses/by-nd/4.0` 
+  if (license === 'Mozilla_Public') {
+    return `https://www.mozilla.org/en-US/MPL/2.0` 
+  }
+  if (license === 'Apache_Public') {
+    return `https://www.apache.org/licenses/LICENSE-2.0` 
   }
 }
 
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
+// function that returns the license section of README
 function renderLicenseSection(license) {
-  if (!license) {
+  if (license === 'none') {
     return ``;
   } else {
     return `## Licenses
-    This project is covered under the ${license} license. To learn more about what this means, click the license button at the top.`
+    This project is covered under the ${license} license. To learn more about what this means, click the license badge at the top.`
   }
 }
 
-// TODO: Create a function to generate markdown for README
+// function to generate markdown for README
 function generateMarkdown(data) {
   return `# ${data.title}
 
-  ${renderLicenseBadge(data.licenses)}
+  ${renderLicenseBadge(data.license)}
 
   ## Table of Contents
   * [Description](#description)
@@ -54,12 +54,12 @@ function generateMarkdown(data) {
   ${data.description}
 
   ## Installation
-  ${data.installation}
+  ${data.install}
 
   ## Usage
   ${data.usage}
 
-  ${renderLicenseSection(data.licenses)}
+  ${renderLicenseSection(data.license)}
 
   ## Contributing
   ${data.contribution}
@@ -68,7 +68,8 @@ function generateMarkdown(data) {
   ${data.test}
 
   ## Questions
-  Have questions about this project?  
+  Feel free to contact me via the following links with any questions about this application.
+  
   GitHub: https://github.com/${data.github}  
   Email: ${data.email}
 

@@ -1,20 +1,20 @@
-// TODO: Include packages needed for this application
+// packages needed for this application along with import of generateMarkdown file
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/generateMarkdown.js');
 
 
-// TODO: Create an array of questions for user input
+// array of question prompts for user
 const questions = [
     {
         type: 'input',
         name: 'title',
-        message: 'Welcome to the README generator! To start, please enter a title for your project:',
+        message: 'Welcome to Generate-a-Readme! To begin, please enter a title for your project:',
         validate: nameInput => {
             if (nameInput) {
                 return true;
             } else {
-                console.log('Your project must have a title');
+                console.log('Your project must have a title!');
                 return false;
             }
         }
@@ -27,7 +27,7 @@ const questions = [
             if (description) {
                 return true;
             } else {
-                console.log('Your project must have a description');
+                console.log('Your project must have a description!');
                 return false;
             }
         }
@@ -60,9 +60,9 @@ const questions = [
     },
     {
         type: 'list',
-        name: 'licenses',
+        name: 'license',
         message: 'What license would you like to include?',
-        choices: ['MIT', 'GNU GPLv3', 'Mozilla Public', 'Apache Public', 'none'],
+        choices: ['MIT', 'GNU_GPLv3', 'Mozilla_Public', 'Apache_Public', 'none'],
     },
     {
         type: 'input',
@@ -119,27 +119,23 @@ const questions = [
 
 ];
 
-// TODO: Create a function to write README file
+// function to write the readme file to the file system
 const writeToFile = data => {
     return new Promise((resolve, reject) => {
-        // make a readme file and add to dist folder
         fs.writeFile('./GeneratedFiles/README.md', data, err => {
-            // if there's an error, reject the Promise and send the error to .catch() method
             if (err) {
                 reject (err);
-                // return out of the function here to make sure the Promise doesn't continut to execute the resolve() function
                 return;
             }
-            // if everything went well, resolve the Promise and send the successful data to the .then() method
             resolve({
                 ok: true,
-                message: console.log('Readme file generated successfully!  Find find in Generated Files folder.')
+                message: console.log('Readme file generated successfully!  Find file in Generated Files folder.')
             });
         })
     })
 }
 
-// TODO: Create a function to initialize app
+//function to initialize
 const init = () => {
     return inquirer.prompt(questions);
 }
