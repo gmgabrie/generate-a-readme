@@ -9,7 +9,7 @@ const questions = [
     {
         type: 'input',
         name: 'title',
-        message: 'Welcome to the README generator! To start, please enter the title of your project:',
+        message: 'Welcome to the README generator! To start, please enter a title for your project:',
         validate: nameInput => {
             if (nameInput) {
                 return true;
@@ -59,17 +59,10 @@ const questions = [
         }
     },
     {
-        type: 'input',
-        name: 'description',
-        message: "Enter your project description here:",
-        validate: descriptionInput => {
-            if (descriptionInput) {
-                return true;
-            } else {
-                console.log('It is essential to provide a description of your project. Not sure what to include? Head to the repo of this README generator and navigate to the section "Description: Questions to Consider" under the Guidelines header for some tips on writing a quality description.');
-                return false;
-            }
-        }
+        type: 'list',
+        name: 'licenses',
+        message: 'What license would you like to include?',
+        choices: ['MIT', 'GNU GPLv3', 'Mozilla Public', 'Apache Public', 'none'],
     },
     {
         type: 'input',
@@ -96,25 +89,6 @@ const questions = [
                 return false;
             }
         }
-    },
-    // {
-    //     type: 'confirm',
-    //     name: 'confirmLicenses',
-    //     message: 'Would you like to include a license?',
-    //     default: false
-    // },
-    {
-        type: 'list',
-        name: 'licenses',
-        message: 'What license would you like to include?',
-        choices: ['MIT', 'GNU GPLv3', 'Mozilla Public', 'Apache Public', 'none'],
-        // when: ({ confirmLicenses }) => {
-        //     if (confirmLicenses) {
-        //         return true;
-        //     } else {
-        //         return false;
-        //     }
-        // }
     },
     {
         type: 'input',
@@ -146,14 +120,38 @@ const questions = [
 ];
 
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+const writeToFile = data => {
+    return new Promise((resolve, reject) => {
+        // make a readme file and add to dist folder
+        fs.writeFile('./GeneratedFiles/README.md', data, err => {
+            // if there's an error, reject the Promise and send the error to .catch() method
+            if (err) {
+                reject (err);
+                // return out of the function here to make sure the Promise doesn't continut to execute the resolve() function
+                return;
+            }
+            // if everything went well, resolve the Promise and send the successful data to the .then() method
+            resolve({
+                ok: true,
+                message: console.log('Readme file generated successfully!  Find find in Generated Files folder.')
+            });
+        })
+    })
+}
 
 // TODO: Create a function to initialize app
-// function init() {}
-
 const init = () => {
     return inquirer.prompt(questions);
 }
 
 // Function call to initialize app
-init();
+init()
+.then(userInput => {
+    return generateMarkdown(userInput);
+})
+.then(readmeInfo => {
+    return writeToFile(readmeInfo);
+})
+.catch(err => {
+    console.log(err);
+})
