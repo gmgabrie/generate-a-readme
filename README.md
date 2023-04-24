@@ -22,7 +22,8 @@
 
   ## Walkthrough Video
   Watch this application in action by clicking on the following link:
-  
+
+  https://drive.google.com/file/d/1BuRvy_krU50meqrkMhs4Y7dLPolxyNuZ/view  
 
   ## Contributing
   You are welcome to contribute to this project by forking the project or contacting me via my Github profile or email address found below in the Questions section.  
