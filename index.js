@@ -120,19 +120,9 @@ const questions = [
 ];
 
 // function to write the readme file to the file system
-const writeToFile = data => {
-    return new Promise((resolve, reject) => {
-        fs.writeFile('./GeneratedFiles/README.md', data, err => {
-            if (err) {
-                reject (err);
-                return;
-            }
-            resolve({
-                ok: true,
-                message: console.log('Readme file generated successfully!  Find file in Generated Files folder.')
-            });
-        })
-    })
+function writeToFile(data) {
+    fs.appendFile(`./GeneratedFiles/README.md`, data, 
+    (err) => err ? console.error(err) : console.log(`Success! - README.md has been generated and can be found in the GeneratedFiles folder.`))
 }
 
 //function to initialize
@@ -147,7 +137,4 @@ init()
 })
 .then(readmeInfo => {
     return writeToFile(readmeInfo);
-})
-.catch(err => {
-    console.log(err);
 })

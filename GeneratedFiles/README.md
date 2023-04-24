@@ -34,4 +34,3 @@
   
   GitHub: https://github.com/gmgabrie  
   Email: ggabriel420@gmail.com
-
